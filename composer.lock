@@ -4,8 +4,49 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa6ce28079e6624915a122db931cc300",
+    "content-hash": "0237d9dd69a04226cab1a6fd250d6411",
     "packages": [
+        {
+            "name": "bhcosta90/app-php-catalog-video",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bhcosta90-codeflix/ms-catalog-domain-php.git",
+                "reference": "3926a904f5edd0f848c61e99eb6e3fcac74e88d3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bhcosta90-codeflix/ms-catalog-domain-php/zipball/3926a904f5edd0f848c61e99eb6e3fcac74e88d3",
+                "reference": "3926a904f5edd0f848c61e99eb6e3fcac74e88d3",
+                "shasum": ""
+            },
+            "require": {
+                "ramsey/uuid": "^4.3"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.5",
+                "phpunit/phpunit": "^9.5"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Costa\\Core\\": "src/Core"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Bruno Costa",
+                    "email": "bhcosta90@gmail.com"
+                }
+            ],
+            "description": "App With PHP - Catalog Video",
+            "support": {
+                "source": "https://github.com/bhcosta90-codeflix/ms-catalog-domain-php/tree/master",
+                "issues": "https://github.com/bhcosta90-codeflix/ms-catalog-domain-php/issues"
+            },
+            "time": "2022-04-18T13:53:28+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.9.3",
@@ -7734,7 +7775,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "bhcosta90/app-php-catalog-video": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
