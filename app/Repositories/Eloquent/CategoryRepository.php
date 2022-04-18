@@ -81,6 +81,8 @@ class CategoryRepository implements CategoryRepositoryInterface
         return new Entity(
             id: $object->id,
             name: $object->name,
+            description: $object->description,
+            isActive: $object->is_active,
         );
     }
 

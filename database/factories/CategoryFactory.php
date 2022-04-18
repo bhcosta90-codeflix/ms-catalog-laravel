@@ -19,7 +19,7 @@ class CategoryFactory extends Factory
         return [
             'id' => str()->uuid(),
             'name' => $this->faker->name(),
-            'description' => $this->faker->sentence(100),
+            'description' => $this->faker->sentence(6),
             'is_active' => true
         ];
     }
