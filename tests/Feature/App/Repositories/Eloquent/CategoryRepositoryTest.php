@@ -80,4 +80,29 @@ class CategoryRepositoryTest extends TestCase
         $this->assertInstanceOf(PaginationInterface::class, $response);
         $this->assertCount(0, $response->items());
     }
+
+    public function testUpdate() {
+        $categoryDb = Model::factory()->create();
+
+        $category = new Entity(
+            id: $categoryDb->id,
+            name: 'teste',
+        );
+
+        $response = $this->repository->update($category);
+
+        $this->assertInstanceOf(Entity::class, $response);
+        $this->assertNotEquals($category->name, $categoryDb->name);
+        $this->assertEquals('teste', $response->name);
+    }
+
+    public function testUpdateNotFound() {
+        $this->expectException(NotFoundDomainException::class);
+
+        $category = new Entity(
+            name: 'teste',
+        );
+
+        $this->repository->update($category);
+    }
 }

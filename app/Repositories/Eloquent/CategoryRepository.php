@@ -57,9 +57,16 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function update(Entity $entity): Entity
     {
-        return new Entity(
-            name: 'dkawopdka'
-        );
+        if ($model = $this->model->find($entity->id())) {
+            $model->update([
+                'name' => $entity->name,
+                'description' => $entity->description,
+                'is_active' => $entity->isActive
+            ]);
+            return $this->toEntity($model);
+        }
+
+        throw new NotFoundDomainException();
     }
 
     public function delete(Entity $entity): bool
