@@ -31,7 +31,7 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function findById(string $id): Entity
     {
-        if ($model = $this->model->find($id)) {
+        if ($model = $this->findByDb($id)) {
             return $this->toEntity($model);
         }
 
@@ -57,7 +57,7 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function update(Entity $entity): Entity
     {
-        if ($model = $this->model->find($entity->id())) {
+        if ($model = $this->findByDb($entity->id())) {
             $model->update([
                 'name' => $entity->name,
                 'description' => $entity->description,
@@ -71,7 +71,9 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function delete(Entity $entity): bool
     {
-        //
+        if ($model = $this->findByDb($entity->id())) {
+            return $model->delete();
+        }
     }
 
     public function toEntity(object $object): Entity
@@ -80,5 +82,14 @@ class CategoryRepository implements CategoryRepositoryInterface
             id: $object->id,
             name: $object->name,
         );
+    }
+
+    protected function findByDb(string $id)
+    {
+        if ($model = $this->model->find($id)) {
+            return $model;
+        }
+
+        throw new NotFoundDomainException();
     }
 }

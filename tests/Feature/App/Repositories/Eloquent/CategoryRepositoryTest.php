@@ -105,4 +105,27 @@ class CategoryRepositoryTest extends TestCase
 
         $this->repository->update($category);
     }
+
+    public function testDelete() {
+        $categoryDb = Model::factory()->create();
+
+        $category = new Entity(
+            id: $categoryDb->id,
+            name: 'teste',
+        );
+
+        $response = $this->repository->delete($category);
+
+        $this->assertTrue($response);
+    }
+
+    public function testDeleteNotFound() {
+        $this->expectException(NotFoundDomainException::class);
+
+        $category = new Entity(
+            name: 'teste',
+        );
+
+        $this->repository->delete($category);
+    }
 }
