@@ -188,5 +188,9 @@ class CategoryControllerTest extends TestCase
         $category = Category::factory()->create();
         $response = $this->deleteJson($this->endpoint . '/' . $category->id);
         $response->assertNoContent();
+
+        $this->assertSoftDeleted('categories', [
+            'id' => $category->id,
+        ]);
     }
 }
