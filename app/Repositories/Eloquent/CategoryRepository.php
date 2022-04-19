@@ -16,6 +16,11 @@ class CategoryRepository implements CategoryRepositoryInterface
         //
     }
 
+    public function getIds(array $id): array
+    {
+        return $this->model->whereIn('id', $id)->get()->toArray();
+    }
+
     public function insert(Entity $entity): Entity
     {
         $category = $this->model->create([

@@ -6,7 +6,6 @@ use App\Repositories\Eloquent\CategoryRepository as Repository;
 use App\Models\Category as Model;
 use Costa\Core\UseCases\Category\UpdateCategoryUseCase;
 use Costa\Core\UseCases\Category\DTO\Updated\Input;
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class UpdateCategoryUseCaseTest extends TestCase
