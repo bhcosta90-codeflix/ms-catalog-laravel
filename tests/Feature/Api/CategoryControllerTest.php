@@ -177,6 +177,12 @@ class CategoryControllerTest extends TestCase
         ]);
     }
 
+    public function test_not_found_destroy()
+    {
+        $response = $this->deleteJson($this->endpoint . '/fake_value');
+        $response->assertStatus(404);
+    }
+
     public function test_destroy()
     {
         $category = Category::factory()->create();
