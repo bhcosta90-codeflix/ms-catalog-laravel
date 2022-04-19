@@ -21,6 +21,7 @@ class CategoryControllerTest extends TestCase
     {
         $mockRequest = Mockery::mock(Request::class);
         $mockRequest->shouldReceive('get')->andReturn('teste');
+        $mockRequest->shouldReceive('all')->andReturn([]);
 
         $mockOutput = Mockery::mock(Output::class, [
             [], 1, 1, 1, 1, 1, 1, 1

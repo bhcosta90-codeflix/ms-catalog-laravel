@@ -14,6 +14,7 @@ class CategoryController extends Controller
     {
         $response = $listCategoryUseCase->execute(
             obj: new Input(
+                filter: $request->all(),
                 page: (int) $request->get('page', 1),
                 totalPage: (int) $request->get('total', 15)
             )
