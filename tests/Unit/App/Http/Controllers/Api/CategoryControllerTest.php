@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 use App\Http\Controllers\Api\CategoryController;
 use Costa\Core\UseCases\Category\ListCategoryUseCase;
-use Costa\Core\UseCases\Category\DTO\Category\ListCategory\Output;
+use Costa\Core\UseCases\Category\DTO\ListCategory\Output;
 use Illuminate\Http\Request;
 use Mockery;
 

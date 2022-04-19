@@ -5,7 +5,7 @@ namespace Tests\Feature\UseCases\Category;
 use App\Repositories\Eloquent\CategoryRepository as Repository;
 use App\Models\Category as Model;
 use Costa\Core\UseCases\Category\UpdateCategoryUseCase;
-use Costa\Core\UseCases\Category\DTO\Category\UpdatedCategory\Input;
+use Costa\Core\UseCases\Category\DTO\UpdatedCategory\Input;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
