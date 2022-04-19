@@ -13,6 +13,7 @@ class CategoryControllerTest extends TestCase
     {
         $response = $this->getJson($this->endpoint);
         $response->assertStatus(200);
+        $response->assertJsonCount(0, 'data');
     }
 
     public function test_list_categories()
@@ -32,6 +33,13 @@ class CategoryControllerTest extends TestCase
                 'from',
             ]
         ]);
+
+        $response->assertJsonCount(15, 'data');
+        $this->assertEquals(3, $response->json('meta.last_page'));
+
+        $response = $this->getJson($this->endpoint . '?page=3');
+        $this->assertEquals(3, $response->json('meta.current_page'));
+        $response->assertJsonCount(5, 'data');
     }
 
     public function test_get_empty_category()
