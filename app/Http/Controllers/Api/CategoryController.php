@@ -79,7 +79,7 @@ class CategoryController extends Controller
 
     public function destroy(string $id, DeleteCategoryUseCase $useCase)
     {
-        $response = $useCase->execute(
+        $useCase->execute(
             input: new DeletedCategoryInput(
                 id: $id,
             )
