@@ -43,7 +43,7 @@ class CategoryControllerTest extends TestCase
     public function test_created()
     {
         $request = new StoreCategoryRequest();
-        $request->headers->set('content-type', 'applicationjson');
+        $request->headers->set('content-type', 'application/json');
         $request->setJson(new ParameterBag([
             'name' => 'Teste'
         ]));
