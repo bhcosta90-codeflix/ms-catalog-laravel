@@ -4,12 +4,15 @@ namespace Tests\Feature\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\CategoryController as Controller;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepository as Repository;
 use Costa\Core\UseCases\Category\{
     ListCategoryUseCase,
     CreateCategoryUseCase,
-    GetCategoryUseCase
+    DeleteCategoryUseCase,
+    GetCategoryUseCase,
+    UpdateCategoryUseCase
 };
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -69,5 +72,40 @@ class CategoryControllerTest extends TestCase
 
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertEquals(200, $response->status());
+    }
+
+    public function test_update()
+    {
+        $category = Model::factory()->create();
+        $useCase = new UpdateCategoryUseCase($this->repo);
+
+        $request = new UpdateCategoryRequest();
+        $request->headers->set('content-type', 'application/json');
+        $request->setJson(new ParameterBag([
+            'name' => 'Teste'
+        ]));
+
+        $response = $this->controller->update(
+            id: $category->id,
+            useCase: $useCase,
+            request: $request,
+        );
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals(200, $response->status());
+    }
+
+    public function test_delete()
+    {
+        $category = Model::factory()->create();
+        $useCase = new DeleteCategoryUseCase($this->repo);
+
+        $response = $this->controller->destroy(
+            id: $category->id,
+            useCase: $useCase,
+        );
+
+        $this->assertInstanceOf(\Illuminate\Http\Response::class, $response);
+        $this->assertEquals(204, $response->status());
     }
 }
