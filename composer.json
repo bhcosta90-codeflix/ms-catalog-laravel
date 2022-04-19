@@ -44,6 +44,11 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "composer": [
+            "composer update",
+            "git add composer.lock",
+            "git commit -m 'atualizando composer'"
         ]
     },
     "extra": {
