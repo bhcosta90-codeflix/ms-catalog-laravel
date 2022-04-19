@@ -20,4 +20,4 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', fn() => response()->json(['message' => 'success']));
-Route::apiResource('category', CategoryController::class);
+Route::apiResource('categories', CategoryController::class);

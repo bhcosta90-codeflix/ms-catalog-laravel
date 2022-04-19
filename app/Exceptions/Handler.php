@@ -2,7 +2,12 @@
 
 namespace App\Exceptions;
 
+use Costa\Core\Domains\Exceptions\{
+    EntityValidationException,
+    NotFoundDomainException
+};
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -46,5 +51,23 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof NotFoundDomainException) {
+            return $this->showError($e->getMessage(), Response::HTTP_NOT_FOUND);
+        }
+
+        if ($e instanceof EntityValidationException) {
+            return $this->showError($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private function showError(string $message, int $status)
+    {
+        return response()->json([
+            'message' => $message
+        ], $status);
     }
 }

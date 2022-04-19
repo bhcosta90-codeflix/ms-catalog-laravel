@@ -39,7 +39,8 @@ class CategoryController extends Controller
                     'first_page' => $response->first_page,
                     'per_page' => $response->per_page,
                     'to' => $response->to,
-                    'from' => $response->from
+                    'from' => $response->from,
+                    'current_page' => $response->current_page
                 ]
             ]);
     }
@@ -54,13 +55,13 @@ class CategoryController extends Controller
             )
         );
 
-        return (new CategoryResource(collect($response)))->response()->setStatusCode(Response::HTTP_CREATED);
+        return (new CategoryResource($response))->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
     public function show(string $id, GetCategoryUseCase $useCase)
     {
         $response = $useCase->execute(new FindCategoryInput($id));
-        return (new CategoryResource(collect($response)))->response();
+        return (new CategoryResource($response))->response();
     }
 
     public function update(string $id, UpdateCategoryUseCase $useCase, UpdateCategoryRequest $request)
@@ -74,7 +75,7 @@ class CategoryController extends Controller
             )
         );
 
-        return (new CategoryResource(collect($response)))->response()->setStatusCode(Response::HTTP_OK);
+        return (new CategoryResource($response))->response()->setStatusCode(Response::HTTP_OK);
     }
 
     public function destroy(string $id, DeleteCategoryUseCase $useCase)

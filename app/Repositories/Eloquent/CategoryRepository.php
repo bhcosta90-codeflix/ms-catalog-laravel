@@ -7,7 +7,7 @@ use Costa\Core\Domains\Entities\Category as Entity;
 use Costa\Core\Domains\Exceptions\NotFoundDomainException;
 use Costa\Core\Domains\Repositories\CategoryRepositoryInterface;
 use Costa\Core\Domains\Repositories\PaginationInterface;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Category as Model;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
@@ -34,8 +34,6 @@ class CategoryRepository implements CategoryRepositoryInterface
         if ($model = $this->findByDb($id)) {
             return $this->toEntity($model);
         }
-
-        throw new NotFoundDomainException();
     }
 
     public function findAll(array $filters = [], ?string $orderColumn = null, ?string $order = null): array
@@ -65,8 +63,6 @@ class CategoryRepository implements CategoryRepositoryInterface
             ]);
             return $this->toEntity($model);
         }
-
-        throw new NotFoundDomainException();
     }
 
     public function delete(Entity $entity): bool
@@ -92,6 +88,6 @@ class CategoryRepository implements CategoryRepositoryInterface
             return $model;
         }
 
-        throw new NotFoundDomainException();
+        throw new NotFoundDomainException(__('Category not found'));
     }
 }
