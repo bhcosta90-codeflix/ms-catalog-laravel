@@ -3,17 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Resources\CategoryResource;
+use Costa\Core\UseCases\Category\CreateCategoryUseCase;
 use Costa\Core\UseCases\Category\ListCategoryUseCase;
-use Costa\Core\UseCases\Category\DTO\Category\ListCategory\Input;
+use Costa\Core\UseCases\Category\DTO\Category\ListCategory\Input as ListCategoryInput;
+use Costa\Core\UseCases\Category\DTO\Category\CreatedCategory\Input as CreatedCategoryInput;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
     public function index(Request $request, ListCategoryUseCase $listCategoryUseCase)
     {
         $response = $listCategoryUseCase->execute(
-            obj: new Input(
+            obj: new ListCategoryInput(
                 filter: $request->all(),
                 page: (int) $request->get('page', 1),
                 totalPage: (int) $request->get('total', 15)
@@ -31,5 +35,18 @@ class CategoryController extends Controller
                     'from' => $response->from
                 ]
             ]);
+    }
+
+    public function store(StoreCategoryRequest $request, CreateCategoryUseCase $createCategoryUseCase)
+    {
+        $response = $createCategoryUseCase->execute(
+            repo: new CreatedCategoryInput(
+                name: $request->name,
+                description: $request->description,
+                isActive: (bool) $request->is_active ?? true
+            )
+        );
+
+        return (new CategoryResource(collect($response)))->response()->setStatusCode(Response::HTTP_CREATED);
     }
 }
