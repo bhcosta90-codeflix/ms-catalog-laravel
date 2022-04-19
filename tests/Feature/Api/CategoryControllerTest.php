@@ -43,7 +43,6 @@ class CategoryControllerTest extends TestCase
     public function test_get_category()
     {
         $category = Category::factory()->create();
-
         $response = $this->getJson($this->endpoint . '/' . $category->id);
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -53,7 +52,46 @@ class CategoryControllerTest extends TestCase
                 'description',
                 'is_active',
                 'created_at',
+                'updated_at',
             ]
         ]);
+    }
+
+    public function test_validation_store()
+    {
+        $response = $this->postJson($this->endpoint, []);
+        $response->assertStatus(422);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'name'
+            ]
+        ]);
+    }
+
+    public function test_store()
+    {
+        $response = $this->postJson($this->endpoint, [
+            'name' => 'teste de categoria'
+        ]);
+
+        $response->assertStatus(201);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'name',
+                'description',
+                'is_active',
+                'created_at',
+                'updated_at',
+            ]
+        ]);
+    }
+
+    public function test_destroy()
+    {
+        $category = Category::factory()->create();
+        $response = $this->deleteJson($this->endpoint . '/' . $category->id);
+        $response->assertNoContent();
     }
 }
