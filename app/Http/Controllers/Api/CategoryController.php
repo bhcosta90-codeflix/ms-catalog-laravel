@@ -9,6 +9,8 @@ use Costa\Core\UseCases\Category\CreateCategoryUseCase;
 use Costa\Core\UseCases\Category\ListCategoryUseCase;
 use Costa\Core\UseCases\Category\DTO\Category\ListCategory\Input as ListCategoryInput;
 use Costa\Core\UseCases\Category\DTO\Category\CreatedCategory\Input as CreatedCategoryInput;
+use Costa\Core\UseCases\Category\DTO\Category\FindCategory\Input as FindCategoryInput;
+use Costa\Core\UseCases\Category\GetCategoryUseCase;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -48,5 +50,10 @@ class CategoryController extends Controller
         );
 
         return (new CategoryResource(collect($response)))->response()->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    public function show(string $id, GetCategoryUseCase $useCase) {
+        $response = $useCase->execute(new FindCategoryInput($id));
+        return (new CategoryResource(collect($response)))->response();
     }
 }

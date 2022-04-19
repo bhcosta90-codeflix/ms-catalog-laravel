@@ -8,7 +8,8 @@ use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepository as Repository;
 use Costa\Core\UseCases\Category\{
     ListCategoryUseCase,
-    CreateCategoryUseCase
+    CreateCategoryUseCase,
+    GetCategoryUseCase
 };
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -53,5 +54,20 @@ class CategoryControllerTest extends TestCase
 
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertEquals(201, $response->status());
+    }
+
+    public function test_show()
+    {
+        $category = Model::factory()->create();
+
+        $useCase = new GetCategoryUseCase($this->repo);
+
+        $response = $this->controller->show(
+            id: $category->id,
+            useCase: $useCase,
+        );
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals(200, $response->status());
     }
 }
