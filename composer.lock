@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bhcosta90-codeflix/ms-catalog-domain-php.git",
-                "reference": "12e0a69b6d4bca7e5df49d06677750d386f3d245"
+                "reference": "4783da313ea02032a15e033fe2c69c4ead3a090e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bhcosta90-codeflix/ms-catalog-domain-php/zipball/12e0a69b6d4bca7e5df49d06677750d386f3d245",
-                "reference": "12e0a69b6d4bca7e5df49d06677750d386f3d245",
+                "url": "https://api.github.com/repos/bhcosta90-codeflix/ms-catalog-domain-php/zipball/4783da313ea02032a15e033fe2c69c4ead3a090e",
+                "reference": "4783da313ea02032a15e033fe2c69c4ead3a090e",
                 "shasum": ""
             },
             "require": {
@@ -45,7 +45,7 @@
                 "source": "https://github.com/bhcosta90-codeflix/ms-catalog-domain-php/tree/master",
                 "issues": "https://github.com/bhcosta90-codeflix/ms-catalog-domain-php/issues"
             },
-            "time": "2022-04-19T20:29:31+00:00"
+            "time": "2022-04-19T20:34:27+00:00"
         },
         {
             "name": "brick/math",
