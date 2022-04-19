@@ -5,7 +5,7 @@ namespace Tests\Feature\UseCases\Category;
 use App\Repositories\Eloquent\CategoryRepository as Repository;
 use App\Models\Category as Model;
 use Costa\Core\UseCases\Category\DeleteCategoryUseCase;
-use Costa\Core\UseCases\Category\DTO\DeletedCategory\Input;
+use Costa\Core\UseCases\Category\DTO\Deleted\Input;
 use Tests\TestCase;
 
 class DeleteCategoryUseCaseTest extends TestCase
