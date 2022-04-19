@@ -48,7 +48,8 @@
         "composer": [
             "composer update",
             "git add composer.lock",
-            "git commit -m 'atualizando composer'"
+            "git commit -m 'atualizando composer'",
+            "git push origin master"
         ]
     },
     "extra": {
