@@ -11,7 +11,7 @@ use Costa\Core\Domains\Repositories\{
     GenreRepositoryInterface
 };
 
-use App\Repositories\Eloquent\TransactionDatabase;
+use App\Repositories\Transactions\TransactionDatabase;
 use Costa\Core\UseCases\Contracts\TransactionContract;
 use Illuminate\Support\ServiceProvider;
 

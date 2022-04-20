@@ -42,75 +42,70 @@ class GenreControllerTest extends TestCase
         $response->assertJsonCount(5, 'data');
     }
 
-    // public function testGetEmpty()
-    // {
-    //     $response = $this->getJson($this->endpoint . '/fake-value');
-    //     $response->assertStatus(404);
-    // }
+    public function testGetEmpty()
+    {
+        $response = $this->getJson($this->endpoint . '/fake-value');
+        $response->assertStatus(404);
+    }
 
-    // public function testGet()
-    // {
-    //     $model = Model::factory()->create();
-    //     $response = $this->getJson($this->endpoint . '/' . $model->id);
-    //     $response->assertStatus(200);
-    //     $response->assertJsonStructure([
-    //         'data' => [
-    //             'id',
-    //             'name',
-    //             'description',
-    //             'is_active',
-    //             'created_at',
-    //             'updated_at',
-    //         ]
-    //     ]);
-    // }
+    public function testGet()
+    {
+        $model = Model::factory()->create();
+        $response = $this->getJson($this->endpoint . '/' . $model->id);
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'name',
+                'is_active',
+                'created_at',
+                'updated_at',
+            ]
+        ]);
+    }
 
-    // public function testValidationStore()
-    // {
-    //     $response = $this->postJson($this->endpoint, []);
-    //     $response->assertStatus(422);
-    //     $response->assertJsonStructure([
-    //         'message',
-    //         'errors' => [
-    //             'name'
-    //         ]
-    //     ]);
-    // }
+    public function testValidationStore()
+    {
+        $response = $this->postJson($this->endpoint, []);
+        $response->assertStatus(422);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'name'
+            ]
+        ]);
+    }
 
-    // public function testStore()
-    // {
-    //     $response = $this->postJson($this->endpoint, [
-    //         'name' => 'teste de categoria'
-    //     ]);
+    public function testStore()
+    {
+        $response = $this->postJson($this->endpoint, [
+            'name' => 'teste de categoria'
+        ]);
 
-    //     $response->assertStatus(201);
-    //     $response->assertJsonStructure([
-    //         'data' => [
-    //             'id',
-    //             'name',
-    //             'description',
-    //             'is_active',
-    //             'created_at',
-    //             'updated_at',
-    //         ]
-    //     ]);
+        $response->assertStatus(201);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'name',
+                'is_active',
+                'created_at',
+                'updated_at',
+            ]
+        ]);
 
-    //     $response = $this->postJson($this->endpoint, [
-    //         'name' => 'teste de categoria',
-    //         'description' => 'teste de descricao',
-    //         'is_active' => false,
-    //     ]);
+        $response = $this->postJson($this->endpoint, [
+            'name' => 'teste de categoria',
+            'is_active' => false,
+        ]);
 
-    //     $this->assertEquals('teste de descricao', $response->json('data.description'));
-    //     $this->assertFalse($response->json('data.is_active'));
+        $this->assertFalse($response->json('data.is_active'));
 
-    //     $this->assertDatabaseHas('categories', [
-    //         'id' => $response->json('data.id'),
-    //         'name' => $response->json('data.name'),
-    //         'description' => $response->json('data.description'),
-    //         'is_active' => $response->json('data.is_active'),
-    //     ]);
-    // }
+        $this->assertDatabaseHas('genres', [
+            'id' => $response->json('data.id'),
+            'name' => $response->json('data.name'),
+            'is_active' => $response->json('data.is_active'),
+        ]);
+    }
 
     // public function testNotFoundUpdate()
     // {

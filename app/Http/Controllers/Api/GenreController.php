@@ -3,19 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreGenreRequest;
 use Costa\Core\UseCases\Genre\ListGenreUseCase;
 use App\Http\Resources\GenreResource as Resource;
+use Costa\Core\UseCases\Genre\CreateGenreUseCase;
 use Costa\Core\UseCases\Genre\DTO\List\Input as ListInput;
 use Costa\Core\UseCases\Genre\DTO\Created\Input as CreateInput;
 use Costa\Core\UseCases\Genre\DTO\Find\Input as FindInput;
 use Costa\Core\UseCases\Genre\DTO\Updated\Input as UpdateInput;
 use Costa\Core\UseCases\Genre\DTO\Deleted\Input as DeleteInput;
-
+use Costa\Core\UseCases\Genre\GetGenreUseCase;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class GenreController extends Controller
 {
-    public function index(ListGenreUseCase $useCase, Request $request){
+    public function index(ListGenreUseCase $useCase, Request $request)
+    {
         $response = $useCase->execute(
             input: new ListInput(
                 filter: $request->all(),
@@ -36,5 +40,23 @@ class GenreController extends Controller
                     'current_page' => $response->current_page
                 ]
             ]);
+    }
+
+    public function show(string $id, GetGenreUseCase $useCase)
+    {
+        $response = $useCase->execute(new FindInput($id));
+        return (new Resource($response))->response();
+    }
+
+    public function store(StoreGenreRequest $request, CreateGenreUseCase $createCategoryUseCase)
+    {
+        $response = $createCategoryUseCase->execute(
+            input: new CreateInput(
+                name: $request->name,
+                isActive: (bool) $request->is_active ?? true
+            )
+        );
+
+        return (new Resource($response))->response()->setStatusCode(Response::HTTP_CREATED);
     }
 }

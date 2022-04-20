@@ -25,6 +25,6 @@ class GetGenreUseCaseTest extends TestCase
 
         $this->assertEquals($category->id, $response->id);
         $this->assertEquals($category->name, $response->name);
-        $this->assertEquals($category->is_active, $response->isActive);
+        $this->assertEquals($category->is_active, $response->is_active);
     }
 }
