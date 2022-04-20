@@ -3,13 +3,14 @@
 namespace App\Repositories\Eloquent;
 
 use App\Repositories\Presenters\Paginator;
-use Costa\Core\Domains\Entities\Category as Entity;
+use Costa\Core\Domains\Entities\Genre as Entity;
 use Costa\Core\Domains\Exceptions\NotFoundDomainException;
-use Costa\Core\Domains\Repositories\CategoryRepositoryInterface;
+use Costa\Core\Domains\Repositories\GenreRepositoryInterface;
 use Costa\Core\Domains\Repositories\PaginationInterface;
-use App\Models\Category as Model;
+use App\Models\Genre as Model;
+use Costa\Core\Domains\ValueObject\Uuid;
 
-class CategoryRepository implements CategoryRepositoryInterface
+class GenreRepository implements GenreRepositoryInterface
 {
     public function __construct(private Model $model)
     {
@@ -23,15 +24,18 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function insert(Entity $entity): Entity
     {
-        $category = $this->model->create([
-            'id' => $entity->id(),
+        $obj = $this->model->create([
+            'id' => $entity->id,
             'name' => $entity->name,
-            'description' => $entity->description,
             'is_active' => $entity->isActive,
-            'created_at' => $entity->createdAt(),
+            'created_at' => $entity->createdAt()
         ]);
 
-        return $this->toEntity($category);
+        if (count($entity->categories ?: [])) {
+            $obj->categories()->attach($entity->categories);
+        }
+
+        return $this->toEntity($obj);
     }
 
     public function findById(string $id): Entity
@@ -48,7 +52,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     public function paginate(
-        array $filters = [],
+        ?array $filters = null,
         ?string $orderColumn = null,
         ?string $order = null,
         int $page = 1,
@@ -66,7 +70,6 @@ class CategoryRepository implements CategoryRepositoryInterface
         if ($model = $this->findByDb($entity->id())) {
             $model->update([
                 'name' => $entity->name,
-                'description' => $entity->description,
                 'is_active' => $entity->isActive
             ]);
             return $this->toEntity($model);
@@ -83,10 +86,10 @@ class CategoryRepository implements CategoryRepositoryInterface
     public function toEntity(object $object): Entity
     {
         return new Entity(
-            id: $object->id,
+            id: new Uuid($object->id),
             name: $object->name,
-            description: $object->description,
             isActive: $object->is_active,
+            categories: $object->categories()->pluck('id')->toArray()
         );
     }
 
@@ -96,6 +99,6 @@ class CategoryRepository implements CategoryRepositoryInterface
             return $model;
         }
 
-        throw new NotFoundDomainException(__('Category not found'));
+        throw new NotFoundDomainException(__('Genre not found'));
     }
 }

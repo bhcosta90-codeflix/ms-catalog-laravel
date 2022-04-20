@@ -5,7 +5,7 @@ namespace Tests\Feature\App\Repositories\Eloquent;
 use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepository as Repository;
 use Costa\Core\Domains\Entities\Category as Entity;
-use Costa\Core\Domains\Repositories\CategoryRepositoryInterface;
+use Costa\Core\Domains\Repositories\CategoryRepositoryInterface as RepositoryInterface;
 use Costa\Core\Domains\Exceptions\NotFoundDomainException;
 use Costa\Core\Domains\Repositories\PaginationInterface;
 use Tests\TestCase;
@@ -30,7 +30,7 @@ class CategoryRepositoryTest extends TestCase
 
         $response = $this->repository->insert($entity);
 
-        $this->assertInstanceOf(CategoryRepositoryInterface::class, $this->repository);
+        $this->assertInstanceOf(RepositoryInterface::class, $this->repository);
         $this->assertInstanceOf(Entity::class, $response);
         $this->assertDatabaseHas('categories', [
             'name' => $entity->name,
@@ -67,11 +67,14 @@ class CategoryRepositoryTest extends TestCase
 
     public function testPaginate()
     {
-        Model::factory(100)->create();
+        Model::factory(35)->create();
 
         $response = $this->repository->paginate();
         $this->assertInstanceOf(PaginationInterface::class, $response);
         $this->assertCount(15, $response->items());
+
+        $response = $this->repository->paginate(page: 3);
+        $this->assertCount(5, $response->items());
     }
 
     public function testPaginateEmpty()
