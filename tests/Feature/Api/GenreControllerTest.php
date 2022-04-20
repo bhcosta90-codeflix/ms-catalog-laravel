@@ -154,8 +154,11 @@ class GenreControllerTest extends TestCase
 
     public function testNotFoundUpdate()
     {
+        $category = Category::factory()->create();
+
         $response = $this->putJson($this->endpoint . '/fake-id', [
-            'name' => 'new name'
+            'name' => 'new name',
+            'categories' => [$category->id]
         ]);
         $response->assertStatus(404);
     }
