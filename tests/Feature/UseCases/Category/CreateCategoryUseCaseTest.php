@@ -4,7 +4,7 @@ namespace Tests\Feature\UseCases\Category;
 
 use App\Repositories\Eloquent\CategoryRepository as Repository;
 use App\Models\Category as Model;
-use Costa\Core\UseCases\Category\CreateCategoryUseCase;
+use Costa\Core\UseCases\Category\CreateCategoryUseCase as UseCase;
 use Costa\Core\UseCases\Category\DTO\Created\Input;
 use Tests\TestCase;
 
@@ -19,7 +19,7 @@ class CreateCategoryUseCaseTest extends TestCase
     {
         $repo = new Repository(new Model);
 
-        $useCase = new CreateCategoryUseCase($repo);
+        $useCase = new UseCase($repo);
         $response = $useCase->execute(new Input(
             name: 'teste'
         ));

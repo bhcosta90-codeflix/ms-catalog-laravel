@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Repositories\Transactions;
 
 use Costa\Core\UseCases\Contracts\TransactionContract;
 use Illuminate\Support\Facades\DB;

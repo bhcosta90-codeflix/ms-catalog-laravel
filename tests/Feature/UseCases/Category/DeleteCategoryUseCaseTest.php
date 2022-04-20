@@ -4,7 +4,7 @@ namespace Tests\Feature\UseCases\Category;
 
 use App\Repositories\Eloquent\CategoryRepository as Repository;
 use App\Models\Category as Model;
-use Costa\Core\UseCases\Category\DeleteCategoryUseCase;
+use Costa\Core\UseCases\Category\DeleteCategoryUseCase as UseCase;
 use Costa\Core\UseCases\Category\DTO\Deleted\Input;
 use Tests\TestCase;
 
@@ -21,7 +21,7 @@ class DeleteCategoryUseCaseTest extends TestCase
 
         $repo = new Repository(new Model);
 
-        $useCase = new DeleteCategoryUseCase($repo);
+        $useCase = new UseCase($repo);
         $useCase->execute(new Input($category->id));
 
         $this->assertDatabaseMissing('categories', [

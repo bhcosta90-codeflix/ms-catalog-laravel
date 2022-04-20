@@ -5,7 +5,7 @@ namespace Tests\Feature\UseCases\Category;
 use App\Repositories\Eloquent\CategoryRepository as Repository;
 use App\Models\Category as Model;
 use Costa\Core\UseCases\Category\DTO\Find\Input;
-use Costa\Core\UseCases\Category\GetCategoryUseCase;
+use Costa\Core\UseCases\Category\GetCategoryUseCase as UseCase;
 use Tests\TestCase;
 
 class GetCategoryUseCaseTest extends TestCase
@@ -20,7 +20,7 @@ class GetCategoryUseCaseTest extends TestCase
         $category = Model::factory()->create();
         $repo = new Repository(new Model);
 
-        $useCase = new GetCategoryUseCase($repo);
+        $useCase = new UseCase($repo);
         $response = $useCase->execute(new Input($category->id));
 
         $this->assertEquals($category->id, $response->id);
