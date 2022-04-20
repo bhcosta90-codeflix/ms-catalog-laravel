@@ -15,7 +15,7 @@ class CreateCategoryUseCaseTest extends TestCase
      *
      * @return void
      */
-    public function test_create()
+    public function testCreate()
     {
         $repo = new Repository(new Model);
 

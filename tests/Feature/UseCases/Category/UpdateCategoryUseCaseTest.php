@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class UpdateCategoryUseCaseTest extends TestCase
 {
-    public function test_update()
+    public function testUpdate()
     {
         $category = Model::factory()->create();
         $repo = new Repository(new Model);

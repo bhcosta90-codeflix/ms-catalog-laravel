@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Feature\UseCases\Category;
+namespace Tests\Feature\UseCases\Genre;
 
-use App\Repositories\Eloquent\CategoryRepository as Repository;
-use App\Models\Category as Model;
-use Costa\Core\UseCases\Category\ListCategoryUseCase as UseCase;
-use Costa\Core\UseCases\Category\DTO\List\Input;
+use App\Repositories\Eloquent\GenreRepository as Repository;
+use App\Models\Genre as Model;
+use Costa\Core\UseCases\Genre\ListGenreUseCase as UseCase;
+use Costa\Core\UseCases\Genre\DTO\List\Input;
 use Tests\TestCase;
 
-class ListCategoryUseCaseTest extends TestCase
+class ListGenreUseCaseTest extends TestCase
 {
     public function testList()
     {

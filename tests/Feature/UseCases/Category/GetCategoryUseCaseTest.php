@@ -15,7 +15,7 @@ class GetCategoryUseCaseTest extends TestCase
      *
      * @return void
      */
-    public function test_get()
+    public function testGet()
     {
         $category = Model::factory()->create();
         $repo = new Repository(new Model);
