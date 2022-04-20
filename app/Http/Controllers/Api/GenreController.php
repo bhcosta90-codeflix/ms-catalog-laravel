@@ -4,15 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGenreRequest;
+use App\Http\Requests\UpdateGenreRequest;
 use Costa\Core\UseCases\Genre\ListGenreUseCase;
 use App\Http\Resources\GenreResource as Resource;
 use Costa\Core\UseCases\Genre\CreateGenreUseCase;
+use Costa\Core\UseCases\Genre\DeleteGenreUseCase;
 use Costa\Core\UseCases\Genre\DTO\List\Input as ListInput;
 use Costa\Core\UseCases\Genre\DTO\Created\Input as CreateInput;
 use Costa\Core\UseCases\Genre\DTO\Find\Input as FindInput;
 use Costa\Core\UseCases\Genre\DTO\Updated\Input as UpdateInput;
 use Costa\Core\UseCases\Genre\DTO\Deleted\Input as DeleteInput;
 use Costa\Core\UseCases\Genre\GetGenreUseCase;
+use Costa\Core\UseCases\Genre\UpdateGenreUseCase;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -58,5 +61,29 @@ class GenreController extends Controller
         );
 
         return (new Resource($response))->response()->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    public function update(string $id, UpdateGenreUseCase $useCase, UpdateGenreRequest $request)
+    {
+        $response = $useCase->execute(
+            input: new UpdateInput(
+                id: $id,
+                name: $request->name,
+                isActive: $request->is_active
+            )
+        );
+
+        return (new Resource($response))->response()->setStatusCode(Response::HTTP_OK);
+    }
+
+    public function destroy(string $id, DeleteGenreUseCase $useCase)
+    {
+        $useCase->execute(
+            input: new DeleteInput(
+                id: $id,
+            )
+        );
+
+        return response()->noContent();
     }
 }

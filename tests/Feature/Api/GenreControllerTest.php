@@ -107,91 +107,85 @@ class GenreControllerTest extends TestCase
         ]);
     }
 
-    // public function testNotFoundUpdate()
-    // {
-    //     $response = $this->putJson($this->endpoint . '/fake-id', [
-    //         'name' => 'new name'
-    //     ]);
-    //     $response->assertStatus(404);
-    // }
+    public function testNotFoundUpdate()
+    {
+        $response = $this->putJson($this->endpoint . '/fake-id', [
+            'name' => 'new name'
+        ]);
+        $response->assertStatus(404);
+    }
 
-    // public function testValidationPpdate()
-    // {
-    //     $model = Model::factory()->create();
-    //     $response = $this->putJson($this->endpoint . '/' . $model->id, []);
-    //     $response->assertStatus(422);
-    //     $response->assertJsonStructure([
-    //         'message',
-    //         'errors' => [
-    //             'name'
-    //         ]
-    //     ]);
-    // }
+    public function testValidationPpdate()
+    {
+        $model = Model::factory()->create();
+        $response = $this->putJson($this->endpoint . '/' . $model->id, []);
+        $response->assertStatus(422);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'name'
+            ]
+        ]);
+    }
 
-    // public function testUpdate()
-    // {
-    //     $model = Model::factory()->create();
-    //     $response = $this->putJson($this->endpoint . '/' . $model->id, [
-    //         'name' => 'new name',
-    //     ]);
+    public function testUpdate()
+    {
+        $model = Model::factory()->create();
+        $response = $this->putJson($this->endpoint . '/' . $model->id, [
+            'name' => 'new name',
+        ]);
 
-    //     $response->assertStatus(200);
-    //     $response->assertJsonStructure([
-    //         'data' => [
-    //             'id',
-    //             'name',
-    //             'description',
-    //             'is_active',
-    //             'created_at',
-    //             'updated_at',
-    //         ]
-    //     ]);
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'name',
+                'is_active',
+                'created_at',
+                'updated_at',
+            ]
+        ]);
 
-    //     $this->assertDatabaseHas('categories', [
-    //         'id' => $model->id,
-    //         'name' => 'new name',
-    //         'description' => $model->description,
-    //         'is_active' => true,
-    //     ]);
+        $this->assertDatabaseHas('genres', [
+            'id' => $model->id,
+            'name' => 'new name',
+            'is_active' => true,
+        ]);
 
-    //     $response = $this->putJson($this->endpoint . '/' . $model->id, [
-    //         'name' => 'new name 2',
-    //         'is_active' => false,
-    //         'description' => 'new description',
-    //     ]);
+        $response = $this->putJson($this->endpoint . '/' . $model->id, [
+            'name' => 'new name 2',
+            'is_active' => false,
+        ]);
 
-    //     $this->assertDatabaseHas('categories', [
-    //         'id' => $model->id,
-    //         'name' => 'new name 2',
-    //         'description' => 'new description',
-    //         'is_active' => false,
-    //     ]);
+        $this->assertDatabaseHas('genres', [
+            'id' => $model->id,
+            'name' => 'new name 2',
+            'is_active' => false,
+        ]);
 
-    //     $response = $this->putJson($this->endpoint . '/' . $model->id, [
-    //         'name' => 'new name 2',
-    //         'description' => 'new description',
-    //     ]);
+        $response = $this->putJson($this->endpoint . '/' . $model->id, [
+            'name' => 'new name 2',
+        ]);
 
-    //     $this->assertDatabaseHas('categories', [
-    //         'id' => $model->id,
-    //         'name' => 'new name 2',
-    //         'description' => 'new description',
-    //         'is_active' => false,
-    //     ]);
-    // }
+        $this->assertDatabaseHas('genres', [
+            'id' => $model->id,
+            'name' => 'new name 2',
+            'is_active' => false,
+        ]);
+    }
 
-    // public function testNotFoundDestroy()
-    // {
-    //     $response = $this->deleteJson($this->endpoint . '/fake_value');
-    //     $response->assertStatus(404);
-    // }
+    public function testNotFoundDestroy()
+    {
+        $response = $this->deleteJson($this->endpoint . '/fake_value');
+        $response->assertStatus(404);
+    }
 
-    // public function testDestroy()
-    // {
-    //     $model = Model::factory()->create();
-    //     $response = $this->deleteJson($this->endpoint . '/' . $model->id);
-    //     $response->assertNoContent();
+    public function testDestroy()
+    {
+        $model = Model::factory()->create();
+        $response = $this->deleteJson($this->endpoint . '/' . $model->id);
+        $response->assertNoContent();
 
-    //     $this->assertSoftDeleted($model);
-    // }
+        $this->assertSoftDeleted($model);
+    }
 }
