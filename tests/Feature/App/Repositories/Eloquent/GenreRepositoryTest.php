@@ -56,31 +56,6 @@ class GenreRepositoryTest extends TestCase
         ]);
     }
 
-    public function testInsertWithCategories()
-    {
-        $categories = Category::factory(4)->create()->pluck('id')->toArray();
-
-        $model = new Entity(name: 'bruno costa');
-
-        foreach ($categories as $category) {
-            $model->addCategory($category);
-        }
-
-        $this->repository->insert($model);
-
-        $this->assertDatabaseCount('category_genre', 4);
-    }
-
-    public function testInsertWithCategoryNotFound()
-    {
-        $this->expectException(QueryException::class);
-
-        $model = new Entity(name: 'bruno costa');
-        $model->addCategory((string) Uuid::random());
-        $this->repository->insert($model);
-        $this->assertDatabaseCount('category_genre', 4);
-    }
-
     public function testNotFound()
     {
         $this->expectException(NotFoundDomainException::class);
@@ -183,5 +158,30 @@ class GenreRepositoryTest extends TestCase
         );
 
         $this->repository->delete($category);
+    }
+
+    public function testInsertWithCategories()
+    {
+        $categories = Category::factory(4)->create()->pluck('id')->toArray();
+
+        $model = new Entity(name: 'bruno costa');
+
+        foreach ($categories as $category) {
+            $model->addCategory($category);
+        }
+
+        $this->repository->insert($model);
+
+        $this->assertDatabaseCount('category_genre', 4);
+    }
+
+    public function testInsertWithCategoryNotFound()
+    {
+        $this->expectException(QueryException::class);
+
+        $model = new Entity(name: 'bruno costa');
+        $model->addCategory((string) Uuid::random());
+        $this->repository->insert($model);
+        $this->assertDatabaseCount('category_genre', 4);
     }
 }
