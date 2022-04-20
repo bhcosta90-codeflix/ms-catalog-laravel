@@ -11,6 +11,7 @@ use Costa\Core\Domains\Exceptions\NotFoundDomainException;
 use Costa\Core\Domains\ValueObject\Uuid;
 use Costa\Core\UseCases\Genre\CreateGenreUseCase as UseCase;
 use Costa\Core\UseCases\Genre\DTO\Created\Input;
+use Exception;
 use Tests\TestCase;
 
 class CreateGenreUseCaseTest extends TestCase
@@ -62,5 +63,30 @@ class CreateGenreUseCaseTest extends TestCase
             name: 'teste',
             categories: [$id]
         ));
+    }
+
+    public function testCreateWithRollback()
+    {
+        $categories = Category::factory(4)->create()->pluck('id')->toArray();
+
+        $repo = new Repository(new Model);
+
+        $useCase = new UseCase(
+            repository: $repo,
+            transactionContract: new TransactionDatabase(),
+            categoryRepositoryInterface: new CategoryRepository(new Category())
+        );
+
+        try {
+            $useCase->execute(new Input(
+                name: 'teste',
+                categories: $categories
+            ));
+
+            $this->assertDatabaseCount('genres', 1);
+        } catch (Exception $e) {
+            $this->assertDatabaseCount('genres', 0);
+            $this->assertDatabaseCount('category_genre', 0);
+        }
     }
 }
