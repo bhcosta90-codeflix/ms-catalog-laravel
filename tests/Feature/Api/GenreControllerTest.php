@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Api;
 
+use App\Models\Category;
 use App\Models\Genre as Model;
 use Tests\TestCase;
 
@@ -64,22 +65,62 @@ class GenreControllerTest extends TestCase
         ]);
     }
 
-    public function testValidationStore()
+    public function testStoreValidate()
     {
         $response = $this->postJson($this->endpoint, []);
         $response->assertStatus(422);
         $response->assertJsonStructure([
             'message',
             'errors' => [
-                'name'
+                'name',
+                'categories'
+            ]
+        ]);
+
+        $response = $this->postJson($this->endpoint, [
+            'name' => 'teste',
+            'categories' => 'a',
+        ]);
+
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'categories'
+            ]
+        ]);
+
+        $response = $this->postJson($this->endpoint, [
+            'name' => 'teste',
+            'categories' => ['a'],
+        ]);
+
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'categories'
+            ]
+        ]);
+
+        $response = $this->postJson($this->endpoint, [
+            'name' => 'teste',
+            'categories' => [str()->uuid()],
+        ]);
+
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'categories'
             ]
         ]);
     }
 
     public function testStore()
     {
+        $category = Category::factory()->create();
+
         $response = $this->postJson($this->endpoint, [
-            'name' => 'teste de categoria'
+            'name' => 'teste de categoria',
+            'categories' => [$category->id]
         ]);
 
         $response->assertStatus(201);
@@ -96,6 +137,7 @@ class GenreControllerTest extends TestCase
         $response = $this->postJson($this->endpoint, [
             'name' => 'teste de categoria',
             'is_active' => false,
+            'categories' => [$category->id]
         ]);
 
         $this->assertFalse($response->json('data.is_active'));
@@ -115,7 +157,7 @@ class GenreControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function testValidationPpdate()
+    public function testUpdateValidate()
     {
         $model = Model::factory()->create();
         $response = $this->putJson($this->endpoint . '/' . $model->id, []);
@@ -123,16 +165,65 @@ class GenreControllerTest extends TestCase
         $response->assertJsonStructure([
             'message',
             'errors' => [
-                'name'
+                'name',
+                'categories',
+            ]
+        ]);
+
+        $response = $this->putJson($this->endpoint . '/' . $model->id, [
+            'name' => 'teste',
+        ]);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'categories',
+            ]
+        ]);
+
+        $response = $this->putJson($this->endpoint . '/' . $model->id, [
+            'name' => 'teste',
+            'categories' => 'a'
+        ]);
+
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'categories',
+            ]
+        ]);
+
+        $response = $this->putJson($this->endpoint . '/' . $model->id, [
+            'name' => 'teste',
+            'categories' => ['a']
+        ]);
+
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'categories',
+            ]
+        ]);
+
+        $response = $this->putJson($this->endpoint . '/' . $model->id, [
+            'name' => 'teste',
+            'categories' => [str()->uuid()]
+        ]);
+
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'categories',
             ]
         ]);
     }
 
     public function testUpdate()
     {
+        $category = Category::factory()->create();
         $model = Model::factory()->create();
         $response = $this->putJson($this->endpoint . '/' . $model->id, [
             'name' => 'new name',
+            'categories' => [$category->id]
         ]);
 
         $response->assertStatus(200);
@@ -155,6 +246,7 @@ class GenreControllerTest extends TestCase
         $response = $this->putJson($this->endpoint . '/' . $model->id, [
             'name' => 'new name 2',
             'is_active' => false,
+            'categories' => [$category->id]
         ]);
 
         $this->assertDatabaseHas('genres', [
@@ -165,6 +257,7 @@ class GenreControllerTest extends TestCase
 
         $response = $this->putJson($this->endpoint . '/' . $model->id, [
             'name' => 'new name 2',
+            'categories' => [$category->id]
         ]);
 
         $this->assertDatabaseHas('genres', [
