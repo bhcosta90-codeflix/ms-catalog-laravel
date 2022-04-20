@@ -2,9 +2,16 @@
 
 namespace App\Providers;
 
-use App\Repositories\Eloquent\CategoryRepository;
+use App\Repositories\Eloquent\{
+    CategoryRepository,
+    GenreRepository
+};
+use Costa\Core\Domains\Repositories\{
+    CategoryRepositoryInterface,
+    GenreRepositoryInterface
+};
+
 use App\Repositories\Eloquent\TransactionDatabase;
-use Costa\Core\Domains\Repositories\CategoryRepositoryInterface;
 use Costa\Core\UseCases\Contracts\TransactionContract;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(CategoryRepositoryInterface::class, CategoryRepository::class);
+        $this->app->singleton(GenreRepositoryInterface::class, GenreRepository::class);
         $this->app->bind(TransactionContract::class, TransactionDatabase::class);
     }
 

@@ -2,23 +2,23 @@
 
 namespace Tests\Feature\Api;
 
-use App\Models\Category;
+use App\Models\Category as Model;
 use Tests\TestCase;
 
 class CategoryControllerTest extends TestCase
 {
     protected string $endpoint = '/api/categories';
 
-    public function test_list_empty_categories()
+    public function testListEmptyGenres()
     {
         $response = $this->getJson($this->endpoint);
         $response->assertStatus(200);
         $response->assertJsonCount(0, 'data');
     }
 
-    public function test_list_categories()
+    public function testListGenres()
     {
-        Category::factory(35)->create();
+        Model::factory(35)->create();
 
         $response = $this->getJson($this->endpoint);
         $response->assertStatus(200);
@@ -42,16 +42,16 @@ class CategoryControllerTest extends TestCase
         $response->assertJsonCount(5, 'data');
     }
 
-    public function test_get_empty_category()
+    public function testGetEmpty()
     {
         $response = $this->getJson($this->endpoint . '/fake-value');
         $response->assertStatus(404);
     }
 
-    public function test_get_category()
+    public function testGet()
     {
-        $category = Category::factory()->create();
-        $response = $this->getJson($this->endpoint . '/' . $category->id);
+        $model = Model::factory()->create();
+        $response = $this->getJson($this->endpoint . '/' . $model->id);
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
@@ -65,7 +65,7 @@ class CategoryControllerTest extends TestCase
         ]);
     }
 
-    public function test_validation_store()
+    public function testValidationStore()
     {
         $response = $this->postJson($this->endpoint, []);
         $response->assertStatus(422);
@@ -77,7 +77,7 @@ class CategoryControllerTest extends TestCase
         ]);
     }
 
-    public function test_store()
+    public function testStore()
     {
         $response = $this->postJson($this->endpoint, [
             'name' => 'teste de categoria'
@@ -112,7 +112,7 @@ class CategoryControllerTest extends TestCase
         ]);
     }
 
-    public function test_not_found_update()
+    public function testNotFoundUpdate()
     {
         $response = $this->putJson($this->endpoint . '/fake-id', [
             'name' => 'new name'
@@ -120,10 +120,10 @@ class CategoryControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function test_validation_update()
+    public function testValidationPpdate()
     {
-        $category = Category::factory()->create();
-        $response = $this->putJson($this->endpoint . '/' . $category->id, []);
+        $model = Model::factory()->create();
+        $response = $this->putJson($this->endpoint . '/' . $model->id, []);
         $response->assertStatus(422);
         $response->assertJsonStructure([
             'message',
@@ -133,10 +133,10 @@ class CategoryControllerTest extends TestCase
         ]);
     }
 
-    public function test_update()
+    public function testUpdate()
     {
-        $category = Category::factory()->create();
-        $response = $this->putJson($this->endpoint . '/' . $category->id, [
+        $model = Model::factory()->create();
+        $response = $this->putJson($this->endpoint . '/' . $model->id, [
             'name' => 'new name',
         ]);
 
@@ -153,52 +153,50 @@ class CategoryControllerTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('categories', [
-            'id' => $category->id,
+            'id' => $model->id,
             'name' => 'new name',
-            'description' => $category->description,
+            'description' => $model->description,
             'is_active' => true,
         ]);
 
-        $response = $this->putJson($this->endpoint . '/' . $category->id, [
+        $response = $this->putJson($this->endpoint . '/' . $model->id, [
             'name' => 'new name 2',
             'is_active' => false,
             'description' => 'new description',
         ]);
 
         $this->assertDatabaseHas('categories', [
-            'id' => $category->id,
+            'id' => $model->id,
             'name' => 'new name 2',
             'description' => 'new description',
             'is_active' => false,
         ]);
 
-        $response = $this->putJson($this->endpoint . '/' . $category->id, [
+        $response = $this->putJson($this->endpoint . '/' . $model->id, [
             'name' => 'new name 2',
             'description' => 'new description',
         ]);
 
         $this->assertDatabaseHas('categories', [
-            'id' => $category->id,
+            'id' => $model->id,
             'name' => 'new name 2',
             'description' => 'new description',
             'is_active' => false,
         ]);
     }
 
-    public function test_not_found_destroy()
+    public function testNotFoundDestroy()
     {
         $response = $this->deleteJson($this->endpoint . '/fake_value');
         $response->assertStatus(404);
     }
 
-    public function test_destroy()
+    public function testDestroy()
     {
-        $category = Category::factory()->create();
-        $response = $this->deleteJson($this->endpoint . '/' . $category->id);
+        $model = Model::factory()->create();
+        $response = $this->deleteJson($this->endpoint . '/' . $model->id);
         $response->assertNoContent();
 
-        $this->assertSoftDeleted('categories', [
-            'id' => $category->id,
-        ]);
+        $this->assertSoftDeleted($model);
     }
 }

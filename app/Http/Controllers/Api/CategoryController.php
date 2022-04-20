@@ -5,15 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-use App\Http\Resources\CategoryResource;
 use Costa\Core\UseCases\Category\CreateCategoryUseCase;
 use Costa\Core\UseCases\Category\DeleteCategoryUseCase;
 use Costa\Core\UseCases\Category\ListCategoryUseCase;
-use Costa\Core\UseCases\Category\DTO\List\Input as ListCategoryInput;
-use Costa\Core\UseCases\Category\DTO\Created\Input as CreatedCategoryInput;
-use Costa\Core\UseCases\Category\DTO\Find\Input as FindCategoryInput;
-use Costa\Core\UseCases\Category\DTO\Updated\Input as UpdatedCategoryInput;
-use Costa\Core\UseCases\Category\DTO\Deleted\Input as DeletedCategoryInput;
+use App\Http\Resources\CategoryResource as Resource;
+use Costa\Core\UseCases\Category\DTO\List\Input as ListInput;
+use Costa\Core\UseCases\Category\DTO\Created\Input as CreateInput;
+use Costa\Core\UseCases\Category\DTO\Find\Input as FindInput;
+use Costa\Core\UseCases\Category\DTO\Updated\Input as UpdateInput;
+use Costa\Core\UseCases\Category\DTO\Deleted\Input as DeleteInput;
 use Costa\Core\UseCases\Category\GetCategoryUseCase;
 use Costa\Core\UseCases\Category\UpdateCategoryUseCase;
 use Illuminate\Http\Request;
@@ -21,17 +21,17 @@ use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
-    public function index(Request $request, ListCategoryUseCase $listCategoryUseCase)
+    public function index(Request $request, ListCategoryUseCase $useCase)
     {
-        $response = $listCategoryUseCase->execute(
-            input: new ListCategoryInput(
+        $response = $useCase->execute(
+            input: new ListInput(
                 filter: $request->all(),
                 page: (int) $request->get('page', 1),
                 totalPage: (int) $request->get('total', 15)
             )
         );
 
-        return CategoryResource::collection(collect($response->items))
+        return Resource::collection(collect($response->items))
             ->additional([
                 'meta' => [
                     'total' => $response->total,
@@ -48,26 +48,26 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request, CreateCategoryUseCase $createCategoryUseCase)
     {
         $response = $createCategoryUseCase->execute(
-            input: new CreatedCategoryInput(
+            input: new CreateInput(
                 name: $request->name,
                 description: $request->description,
                 isActive: (bool) $request->is_active ?? true
             )
         );
 
-        return (new CategoryResource($response))->response()->setStatusCode(Response::HTTP_CREATED);
+        return (new Resource($response))->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
     public function show(string $id, GetCategoryUseCase $useCase)
     {
-        $response = $useCase->execute(new FindCategoryInput($id));
-        return (new CategoryResource($response))->response();
+        $response = $useCase->execute(new FindInput($id));
+        return (new Resource($response))->response();
     }
 
     public function update(string $id, UpdateCategoryUseCase $useCase, UpdateCategoryRequest $request)
     {
         $response = $useCase->execute(
-            input: new UpdatedCategoryInput(
+            input: new UpdateInput(
                 id: $id,
                 name: $request->name,
                 description: $request->description,
@@ -75,13 +75,13 @@ class CategoryController extends Controller
             )
         );
 
-        return (new CategoryResource($response))->response()->setStatusCode(Response::HTTP_OK);
+        return (new Resource($response))->response()->setStatusCode(Response::HTTP_OK);
     }
 
     public function destroy(string $id, DeleteCategoryUseCase $useCase)
     {
         $useCase->execute(
-            input: new DeletedCategoryInput(
+            input: new DeleteInput(
                 id: $id,
             )
         );

@@ -26,6 +26,6 @@ class GetCategoryUseCaseTest extends TestCase
         $this->assertEquals($category->id, $response->id);
         $this->assertEquals($category->name, $response->name);
         $this->assertEquals($category->description, $response->description);
-        $this->assertEquals($category->is_active, $response->isActive);
+        $this->assertEquals($category->is_active, $response->is_active);
     }
 }

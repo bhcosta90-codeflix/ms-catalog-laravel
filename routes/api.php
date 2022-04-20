@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\CategoryController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\{
+    CategoryController,
+    GenreController
+};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +23,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => response()->json(['message' => 'success']));
 Route::apiResource('categories', CategoryController::class);
+Route::apiResource('genres', GenreController::class);
