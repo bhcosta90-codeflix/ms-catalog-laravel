@@ -46,10 +46,8 @@ class CreateGenreUseCaseTest extends TestCase
 
     public function testCreateCategoriesInvalids()
     {
-        $id = (string) Uuid::random();
-
         $this->expectException(NotFoundDomainException::class);
-        $this->expectExceptionMessage("Category {$id} not found");
+        $this->expectExceptionMessage("Category fake-id not found");
 
         $repo = new Repository(new Model);
 
@@ -61,7 +59,7 @@ class CreateGenreUseCaseTest extends TestCase
 
         $useCase->execute(new Input(
             name: 'teste',
-            categories: [$id]
+            categories: ['fake-id']
         ));
     }
 

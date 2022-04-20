@@ -184,4 +184,32 @@ class GenreRepositoryTest extends TestCase
         $this->repository->insert($model);
         $this->assertDatabaseCount('category_genre', 4);
     }
+
+    public function testUpdateWithCategories()
+    {
+        $categories = Category::factory(4)->create()->pluck('id')->toArray();
+        $modelDb = Model::factory()->create();
+        $model = new Entity(
+            id: new Uuid($modelDb->id),
+            name: 'teste',
+            categories: $categories,
+        );
+
+        $this->repository->update($model);
+        $this->assertDatabaseCount('category_genre', 4);
+    }
+
+    public function testUpdateWithCategoriesNotFound()
+    {
+        $this->expectException(QueryException::class);
+
+        $modelDb = Model::factory()->create();
+        $model = new Entity(
+            id: new Uuid($modelDb->id),
+            name: 'teste',
+            categories: ['fake-id'],
+        );
+
+        $this->repository->update($model);
+    }
 }

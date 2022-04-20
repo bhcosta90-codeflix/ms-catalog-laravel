@@ -32,7 +32,7 @@ class GenreRepository implements GenreRepositoryInterface
         ]);
 
         if (count($entity->categories ?: [])) {
-            $obj->categories()->attach($entity->categories);
+            $obj->categories()->sync($entity->categories);
         }
 
         return $this->toEntity($obj);
@@ -68,10 +68,14 @@ class GenreRepository implements GenreRepositoryInterface
     public function update(Entity $entity): Entity
     {
         if ($model = $this->findByDb($entity->id())) {
+
             $model->update([
                 'name' => $entity->name,
                 'is_active' => $entity->isActive
             ]);
+
+            $model->categories()->sync($entity->categories);
+
             return $this->toEntity($model);
         }
     }
