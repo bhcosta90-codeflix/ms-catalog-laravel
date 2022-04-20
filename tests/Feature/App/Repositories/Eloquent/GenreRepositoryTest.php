@@ -128,36 +128,36 @@ class GenreRepositoryTest extends TestCase
     {
         $this->expectException(NotFoundDomainException::class);
 
-        $category = new Entity(
+        $model = new Entity(
             name: 'teste',
         );
 
-        $this->repository->update($category);
+        $this->repository->update($model);
     }
 
     public function testDelete()
     {
-        $categoryDb = Model::factory()->create();
+        $modelDb = Model::factory()->create();
 
-        $category = new Entity(
-            id: new Uuid($categoryDb->id),
+        $model = new Entity(
+            id: new Uuid($modelDb->id),
             name: 'teste',
         );
 
-        $response = $this->repository->delete($category);
-
+        $response = $this->repository->delete($model);
         $this->assertTrue($response);
+        $this->assertSoftDeleted($modelDb);
     }
 
     public function testDeleteNotFound()
     {
         $this->expectException(NotFoundDomainException::class);
 
-        $category = new Entity(
+        $model = new Entity(
             name: 'teste',
         );
 
-        $this->repository->delete($category);
+        $this->repository->delete($model);
     }
 
     public function testInsertWithCategories()

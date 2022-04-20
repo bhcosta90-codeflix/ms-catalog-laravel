@@ -39,11 +39,11 @@ class CategoryRepositoryTest extends TestCase
 
     public function testFindById()
     {
-        $category = Model::factory()->create();
+        $model = Model::factory()->create();
 
-        $response = $this->repository->findById($category->id);
+        $response = $this->repository->findById($model->id);
         $this->assertInstanceOf(Entity::class, $response);
-        $this->assertEquals($category->id, $response->id());
+        $this->assertEquals($model->id, $response->id());
     }
 
     public function testFindAll()
@@ -85,50 +85,51 @@ class CategoryRepositoryTest extends TestCase
     }
 
     public function testUpdate() {
-        $categoryDb = Model::factory()->create();
+        $modelDb = Model::factory()->create();
 
-        $category = new Entity(
-            id: $categoryDb->id,
+        $model = new Entity(
+            id: $modelDb->id,
             name: 'teste',
         );
 
-        $response = $this->repository->update($category);
+        $response = $this->repository->update($model);
 
         $this->assertInstanceOf(Entity::class, $response);
-        $this->assertNotEquals($category->name, $categoryDb->name);
+        $this->assertNotEquals($model->name, $modelDb->name);
         $this->assertEquals('teste', $response->name);
     }
 
     public function testUpdateNotFound() {
         $this->expectException(NotFoundDomainException::class);
 
-        $category = new Entity(
+        $model = new Entity(
             name: 'teste',
         );
 
-        $this->repository->update($category);
+        $this->repository->update($model);
     }
 
     public function testDelete() {
-        $categoryDb = Model::factory()->create();
+        $modelDb = Model::factory()->create();
 
-        $category = new Entity(
-            id: $categoryDb->id,
+        $model = new Entity(
+            id: $modelDb->id,
             name: 'teste',
         );
 
-        $response = $this->repository->delete($category);
+        $response = $this->repository->delete($model);
 
         $this->assertTrue($response);
+        $this->assertSoftDeleted($modelDb);
     }
 
     public function testDeleteNotFound() {
         $this->expectException(NotFoundDomainException::class);
 
-        $category = new Entity(
+        $model = new Entity(
             name: 'teste',
         );
 
-        $this->repository->delete($category);
+        $this->repository->delete($model);
     }
 }
