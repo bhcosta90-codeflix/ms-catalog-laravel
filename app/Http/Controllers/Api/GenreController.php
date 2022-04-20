@@ -56,7 +56,8 @@ class GenreController extends Controller
         $response = $createCategoryUseCase->execute(
             input: new CreateInput(
                 name: $request->name,
-                isActive: (bool) $request->is_active ?? true
+                isActive: (bool) $request->is_active ?? true,
+                categories: $request->categories
             )
         );
 
@@ -69,7 +70,8 @@ class GenreController extends Controller
             input: new UpdateInput(
                 id: $id,
                 name: $request->name,
-                isActive: $request->is_active
+                isActive: $request->is_active,
+                categories: $request->categories
             )
         );
 

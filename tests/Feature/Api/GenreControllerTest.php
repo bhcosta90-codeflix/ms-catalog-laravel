@@ -123,6 +123,8 @@ class GenreControllerTest extends TestCase
             'categories' => [$category->id]
         ]);
 
+        $this->assertDatabaseCount('category_genre', 1);
+
         $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
@@ -141,6 +143,7 @@ class GenreControllerTest extends TestCase
         ]);
 
         $this->assertFalse($response->json('data.is_active'));
+        $this->assertDatabaseCount('category_genre', 2);
 
         $this->assertDatabaseHas('genres', [
             'id' => $response->json('data.id'),
@@ -225,6 +228,7 @@ class GenreControllerTest extends TestCase
             'name' => 'new name',
             'categories' => [$category->id]
         ]);
+        $this->assertDatabaseCount('category_genre', 1);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -249,6 +253,7 @@ class GenreControllerTest extends TestCase
             'categories' => [$category->id]
         ]);
 
+        $this->assertDatabaseCount('category_genre', 1);
         $this->assertDatabaseHas('genres', [
             'id' => $model->id,
             'name' => 'new name 2',
@@ -265,6 +270,7 @@ class GenreControllerTest extends TestCase
             'name' => 'new name 2',
             'is_active' => false,
         ]);
+        $this->assertDatabaseCount('category_genre', 1);
     }
 
     public function testNotFoundDestroy()
