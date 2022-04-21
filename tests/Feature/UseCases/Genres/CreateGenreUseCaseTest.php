@@ -7,10 +7,10 @@ use App\Repositories\Eloquent\GenreRepository as Repository;
 use App\Models\Genre as Model;
 use App\Repositories\Eloquent\CategoryRepository;
 use App\Repositories\Transactions\TransactionDatabase;
-use Costa\Core\Domains\Exceptions\NotFoundDomainException;
-use Costa\Core\Domains\ValueObject\Uuid;
-use Costa\Core\UseCases\Genre\CreateGenreUseCase as UseCase;
-use Costa\Core\UseCases\Genre\DTO\Created\Input;
+use Costa\Core\Utils\Domains\Exceptions\NotFoundDomainException;
+use Costa\Core\Utils\Domains\ValueObject\Uuid;
+use Costa\Core\Modules\Genre\UseCases\CreateGenreUseCase as UseCase;
+use Costa\Core\Modules\Genre\UseCases\DTO\Created\Input;
 use Exception;
 use Tests\TestCase;
 

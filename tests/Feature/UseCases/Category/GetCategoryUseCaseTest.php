@@ -4,8 +4,8 @@ namespace Tests\Feature\UseCases\Category;
 
 use App\Repositories\Eloquent\CategoryRepository as Repository;
 use App\Models\Category as Model;
-use Costa\Core\UseCases\Category\DTO\Find\Input;
-use Costa\Core\UseCases\Category\GetCategoryUseCase as UseCase;
+use Costa\Core\Modules\Category\UseCases\DTO\Find\Input;
+use Costa\Core\Modules\Category\UseCases\GetCategoryUseCase as UseCase;
 use Tests\TestCase;
 
 class GetCategoryUseCaseTest extends TestCase

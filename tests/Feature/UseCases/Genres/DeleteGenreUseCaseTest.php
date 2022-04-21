@@ -4,8 +4,8 @@ namespace Tests\Feature\UseCases\Genre;
 
 use App\Repositories\Eloquent\GenreRepository as Repository;
 use App\Models\Genre as Model;
-use Costa\Core\UseCases\Genre\DeleteGenreUseCase as UseCase;
-use Costa\Core\UseCases\Genre\DTO\Deleted\Input;
+use Costa\Core\Modules\Genre\UseCases\DeleteGenreUseCase as UseCase;
+use Costa\Core\Modules\Genre\UseCases\DTO\Deleted\Input;
 use Tests\TestCase;
 
 class DeleteGenreUseCaseTest extends TestCase

@@ -5,8 +5,8 @@ namespace Tests\Unit\App\Http\Controllers\Api;
 use PHPUnit\Framework\TestCase;
 
 use App\Http\Controllers\Api\CategoryController;
-use Costa\Core\UseCases\Category\ListCategoryUseCase;
-use Costa\Core\UseCases\Category\DTO\List\Output;
+use Costa\Core\Modules\Category\UseCases\ListCategoryUseCase;
+use Costa\Core\Modules\Category\UseCases\DTO\List\Output;
 use Illuminate\Http\Request;
 use Mockery;
 

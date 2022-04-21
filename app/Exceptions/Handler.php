@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use Costa\Core\Domains\Exceptions\{
+use Costa\Core\Utils\Domains\Exceptions\{
     EntityValidationException,
     NotFoundDomainException
 };

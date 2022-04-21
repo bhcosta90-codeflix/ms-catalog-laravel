@@ -4,8 +4,8 @@ namespace Tests\Feature\UseCases\Category;
 
 use App\Repositories\Eloquent\CategoryRepository as Repository;
 use App\Models\Category as Model;
-use Costa\Core\UseCases\Category\UpdateCategoryUseCase as UseCase;
-use Costa\Core\UseCases\Category\DTO\Updated\Input;
+use Costa\Core\Modules\Category\UseCases\UpdateCategoryUseCase as UseCase;
+use Costa\Core\Modules\Category\UseCases\DTO\Updated\Input;
 use Tests\TestCase;
 
 class UpdateCategoryUseCaseTest extends TestCase

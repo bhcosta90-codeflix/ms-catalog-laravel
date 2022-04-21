@@ -3,12 +3,12 @@
 namespace App\Repositories\Eloquent;
 
 use App\Repositories\Presenters\Paginator;
-use Costa\Core\Domains\Entities\Genre as Entity;
-use Costa\Core\Domains\Exceptions\NotFoundDomainException;
-use Costa\Core\Domains\Repositories\GenreRepositoryInterface;
-use Costa\Core\Domains\Repositories\PaginationInterface;
+use Costa\Core\Modules\Genre\Entities\Genre as Entity;
+use Costa\Core\Utils\Domains\Exceptions\NotFoundDomainException;
+use Costa\Core\Modules\Genre\Repositories\GenreRepositoryInterface;
+use Costa\Core\Utils\Domains\Repositories\PaginationInterface;
 use App\Models\Genre as Model;
-use Costa\Core\Domains\ValueObject\Uuid;
+use Costa\Core\Utils\Domains\ValueObject\Uuid;
 
 class GenreRepository implements GenreRepositoryInterface
 {

@@ -2,17 +2,12 @@
 
 namespace App\Providers;
 
-use App\Repositories\Eloquent\{
-    CategoryRepository,
-    GenreRepository
-};
-use Costa\Core\Domains\Repositories\{
-    CategoryRepositoryInterface,
-    GenreRepositoryInterface
-};
-
+use App\Repositories\Eloquent\CategoryRepository;
+use App\Repositories\Eloquent\GenreRepository;
 use App\Repositories\Transactions\TransactionDatabase;
-use Costa\Core\UseCases\Contracts\TransactionContract;
+use Costa\Core\Modules\Category\Repositories\CategoryRepositoryInterface;
+use Costa\Core\Modules\Genre\Repositories\GenreRepositoryInterface;
+use Costa\Core\Utils\UseCases\Contracts\TransactionContract;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

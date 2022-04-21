@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Transactions;
 
-use Costa\Core\UseCases\Contracts\TransactionContract;
+use Costa\Core\Utils\UseCases\Contracts\TransactionContract;
 use Illuminate\Support\Facades\DB;
 
 class TransactionDatabase implements TransactionContract

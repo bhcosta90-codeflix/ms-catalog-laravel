@@ -3,10 +3,10 @@
 namespace App\Repositories\Eloquent;
 
 use App\Repositories\Presenters\Paginator;
-use Costa\Core\Domains\Entities\Category as Entity;
-use Costa\Core\Domains\Exceptions\NotFoundDomainException;
-use Costa\Core\Domains\Repositories\CategoryRepositoryInterface;
-use Costa\Core\Domains\Repositories\PaginationInterface;
+use Costa\Core\Modules\Category\Entities\Category as Entity;
+use Costa\Core\Utils\Domains\Exceptions\NotFoundDomainException;
+use Costa\Core\Modules\Category\Repositories\CategoryRepositoryInterface;
+use Costa\Core\Utils\Domains\Repositories\PaginationInterface;
 use App\Models\Category as Model;
 
 class CategoryRepository implements CategoryRepositoryInterface

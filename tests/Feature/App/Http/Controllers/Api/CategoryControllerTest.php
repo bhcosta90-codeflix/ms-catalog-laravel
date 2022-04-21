@@ -7,7 +7,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepository as Repository;
-use Costa\Core\UseCases\Category\{
+use Costa\Core\Modules\Category\UseCases\{
     ListCategoryUseCase,
     CreateCategoryUseCase,
     DeleteCategoryUseCase,

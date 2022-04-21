@@ -6,11 +6,11 @@ use App\Models\Category;
 use App\Models\Genre as Model;
 use App\Models\Genre;
 use App\Repositories\Eloquent\GenreRepository as Repository;
-use Costa\Core\Domains\Entities\Genre as Entity;
-use Costa\Core\Domains\Repositories\GenreRepositoryInterface as RepositoryInterface;
-use Costa\Core\Domains\Exceptions\NotFoundDomainException;
-use Costa\Core\Domains\Repositories\PaginationInterface;
-use Costa\Core\Domains\ValueObject\Uuid;
+use Costa\Core\Modules\Genre\Entities\Genre as Entity;
+use Costa\Core\Modules\Genre\Repositories\GenreRepositoryInterface as RepositoryInterface;
+use Costa\Core\Utils\Domains\Exceptions\NotFoundDomainException;
+use Costa\Core\Utils\Domains\Repositories\PaginationInterface;
+use Costa\Core\Utils\Domains\ValueObject\Uuid;
 use Illuminate\Database\QueryException;
 use Tests\TestCase;
 

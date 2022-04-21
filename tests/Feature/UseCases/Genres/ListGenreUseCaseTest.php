@@ -4,8 +4,8 @@ namespace Tests\Feature\UseCases\Genre;
 
 use App\Repositories\Eloquent\GenreRepository as Repository;
 use App\Models\Genre as Model;
-use Costa\Core\UseCases\Genre\ListGenreUseCase as UseCase;
-use Costa\Core\UseCases\Genre\DTO\List\Input;
+use Costa\Core\Modules\Genre\UseCases\ListGenreUseCase as UseCase;
+use Costa\Core\Modules\Genre\UseCases\DTO\List\Input;
 use Tests\TestCase;
 
 class ListGenreUseCaseTest extends TestCase

@@ -4,10 +4,10 @@ namespace Tests\Feature\App\Repositories\Eloquent;
 
 use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepository as Repository;
-use Costa\Core\Domains\Entities\Category as Entity;
-use Costa\Core\Domains\Repositories\CategoryRepositoryInterface as RepositoryInterface;
-use Costa\Core\Domains\Exceptions\NotFoundDomainException;
-use Costa\Core\Domains\Repositories\PaginationInterface;
+use Costa\Core\Modules\Category\Entities\Category as Entity;
+use Costa\Core\Modules\Category\Repositories\CategoryRepositoryInterface as RepositoryInterface;
+use Costa\Core\Utils\Domains\Exceptions\NotFoundDomainException;
+use Costa\Core\Utils\Domains\Repositories\PaginationInterface;
 use Tests\TestCase;
 
 class CategoryRepositoryTest extends TestCase
