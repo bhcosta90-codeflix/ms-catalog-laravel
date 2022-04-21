@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\UseCases\Genres;
+namespace Tests\Feature\UseCases\Genre;
 
 use App\Models\Category;
 use App\Repositories\Eloquent\GenreRepository as Repository;
