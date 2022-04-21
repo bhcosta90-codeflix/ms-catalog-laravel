@@ -7,7 +7,7 @@ use App\Repositories\Eloquent\GenreRepository;
 use App\Repositories\Transactions\TransactionDatabase;
 use Costa\Core\Modules\Category\Repositories\CategoryRepositoryInterface;
 use Costa\Core\Modules\Genre\Repositories\GenreRepositoryInterface;
-use Costa\Core\Utils\UseCases\Contracts\TransactionContract;
+use Costa\Core\Utils\Contracts\TransactionContract;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

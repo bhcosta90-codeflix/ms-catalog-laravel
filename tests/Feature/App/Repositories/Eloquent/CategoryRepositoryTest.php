@@ -6,8 +6,8 @@ use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepository as Repository;
 use Costa\Core\Modules\Category\Entities\Category as Entity;
 use Costa\Core\Modules\Category\Repositories\CategoryRepositoryInterface as RepositoryInterface;
-use Costa\Core\Utils\Domains\Exceptions\NotFoundDomainException;
-use Costa\Core\Utils\Domains\Repositories\PaginationInterface;
+use Costa\Core\Utils\Exceptions\NotFoundDomainException;
+use Costa\Core\Utils\Contracts\PaginationInterface;
 use Tests\TestCase;
 
 class CategoryRepositoryTest extends TestCase
