@@ -60,7 +60,7 @@ class GenreRepository implements GenreRepositoryInterface
     ): PaginationInterface {
         $data = $this->model->paginate(
             perPage: $totalPage,
-            page: $page
+            page: $page,
         );
         return new Paginator($data);
     }

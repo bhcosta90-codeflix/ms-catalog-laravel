@@ -37,6 +37,12 @@ class CategoryRepositoryTest extends TestCase
         ]);
     }
 
+    public function testFindByIdNotFound()
+    {
+        $this->expectException(NotFoundDomainException::class);
+        $this->repository->findById('fake-value');
+    }
+
     public function testFindById()
     {
         $model = Model::factory()->create();
@@ -46,6 +52,12 @@ class CategoryRepositoryTest extends TestCase
         $this->assertEquals($model->id, $response->id());
     }
 
+    public function testFindAllEmpty()
+    {
+        $response = $this->repository->findAll();
+        $this->assertCount(0, $response);
+    }
+
     public function testFindAll()
     {
         Model::factory(10)->create();
@@ -53,16 +65,11 @@ class CategoryRepositoryTest extends TestCase
         $this->assertCount(10, $response);
     }
 
-    public function testFindAllEmpty()
+    public function testPaginateEmpty()
     {
-        $response = $this->repository->findAll();
-        $this->assertCount(0, $response);
-    }
-
-    public function testFindByIdNotFound()
-    {
-        $this->expectException(NotFoundDomainException::class);
-        $this->repository->findById('fake-value');
+        $response = $this->repository->paginate();
+        $this->assertInstanceOf(PaginationInterface::class, $response);
+        $this->assertCount(0, $response->items());
     }
 
     public function testPaginate()
@@ -77,11 +84,14 @@ class CategoryRepositoryTest extends TestCase
         $this->assertCount(5, $response->items());
     }
 
-    public function testPaginateEmpty()
-    {
-        $response = $this->repository->paginate();
-        $this->assertInstanceOf(PaginationInterface::class, $response);
-        $this->assertCount(0, $response->items());
+    public function testUpdateNotFound() {
+        $this->expectException(NotFoundDomainException::class);
+
+        $model = new Entity(
+            name: 'teste',
+        );
+
+        $this->repository->update($model);
     }
 
     public function testUpdate() {
@@ -99,14 +109,14 @@ class CategoryRepositoryTest extends TestCase
         $this->assertEquals('teste', $response->name);
     }
 
-    public function testUpdateNotFound() {
+    public function testDeleteNotFound() {
         $this->expectException(NotFoundDomainException::class);
 
         $model = new Entity(
             name: 'teste',
         );
 
-        $this->repository->update($model);
+        $this->repository->delete($model);
     }
 
     public function testDelete() {
@@ -121,15 +131,5 @@ class CategoryRepositoryTest extends TestCase
 
         $this->assertTrue($response);
         $this->assertSoftDeleted($modelDb);
-    }
-
-    public function testDeleteNotFound() {
-        $this->expectException(NotFoundDomainException::class);
-
-        $model = new Entity(
-            name: 'teste',
-        );
-
-        $this->repository->delete($model);
     }
 }
