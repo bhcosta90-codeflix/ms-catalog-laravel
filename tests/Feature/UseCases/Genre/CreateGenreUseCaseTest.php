@@ -12,6 +12,7 @@ use Costa\Core\Utils\ValueObject\Uuid;
 use Costa\Core\Modules\Genre\UseCases\CreateGenreUseCase as UseCase;
 use Costa\Core\Modules\Genre\UseCases\DTO\Created\Input;
 use Exception;
+use Mockery;
 use Tests\TestCase;
 
 class CreateGenreUseCaseTest extends TestCase
@@ -69,22 +70,40 @@ class CreateGenreUseCaseTest extends TestCase
 
         $repo = new Repository(new Model);
 
-        $useCase = new UseCase(
-            repository: $repo,
-            transactionContract: new TransactionDatabase(),
-            categoryRepositoryInterface: new CategoryRepository(new Category())
-        );
+        // $useCase = new UseCase(
+        //     repository: $repo,
+        //     transactionContract: new TransactionDatabase(),
+        //     categoryRepositoryInterface: new CategoryRepository(new Category())
+        // );
+
+        $mock = Mockery::mock(UseCase::class, [
+            $repo,
+            new TransactionDatabase,
+            new CategoryRepository(new Category()),
+        ]);
 
         try {
-            $useCase->execute(new Input(
+            $mock->shouldReceive('execute', throw new Exception());
+
+            $mock->execute(new Input(
                 name: 'teste',
                 categories: $categories
             ));
-
-            $this->assertDatabaseCount('genres', 1);
-        } catch (Exception $e) {
+        } catch(Exception $e) {
             $this->assertDatabaseCount('genres', 0);
             $this->assertDatabaseCount('category_genre', 0);
         }
+
+        // try {
+        //     $useCase->execute(new Input(
+        //         name: 'teste',
+        //         categories: $categories
+        //     ));
+
+        //     $this->assertDatabaseCount('genres', 1);
+        // } catch (Exception $e) {
+        //     $this->assertDatabaseCount('genres', 0);
+        //     $this->assertDatabaseCount('category_genre', 0);
+        // }
     }
 }
