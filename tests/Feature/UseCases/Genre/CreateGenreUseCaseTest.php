@@ -88,27 +88,5 @@ class CreateGenreUseCaseTest extends TestCase
             $this->assertDatabaseCount('genres', 0);
             $this->assertDatabaseCount('category_genre', 0);
         }
-
-        // $categories = Category::factory(4)->create()->pluck('id')->toArray();
-
-        // $repo = new Repository(new Model);
-
-        // $useCase = new UseCase(
-        //     repository: $repo,
-        //     transactionContract: new TransactionDatabase(),
-        //     categoryRepositoryInterface: new CategoryRepository(new Category())
-        // );
-
-        // try {
-        //     $useCase->execute(new Input(
-        //         name: 'teste',
-        //         categories: $categories
-        //     ));
-
-        //     $this->assertDatabaseCount('genres', 1);
-        // } catch (Exception $e) {
-        //     $this->assertDatabaseCount('genres', 0);
-        //     $this->assertDatabaseCount('category_genre', 0);
-        // }
     }
 }
