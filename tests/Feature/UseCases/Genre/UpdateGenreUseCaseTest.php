@@ -12,6 +12,8 @@ use Costa\Core\Utils\Exceptions\NotFoundDomainException;
 use Costa\Core\Utils\ValueObject\Uuid;
 use Costa\Core\Modules\Genre\UseCases\UpdateGenreUseCase as UseCase;
 use Costa\Core\Modules\Genre\UseCases\DTO\Updated\Input;
+use Exception;
+use Mockery;
 use Tests\TestCase;
 use Throwable;
 
@@ -44,13 +46,16 @@ class UpdateGenreUseCaseTest extends TestCase
 
     }
 
-    public function testCreateWithRollback()
+    public function testUpdateWithRollback()
     {
         $genre = Genre::factory()->create();
 
         $categories = Category::factory(4)->create()->pluck('id')->toArray();
 
-        $repo = new Repository(new Model);
+        $repo = Mockery::mock(Repository::class, [
+            new Model
+        ]);
+        $repo->shouldReceive('update')->andThrow(Exception::class);
 
         $useCase = new UseCase(
             repository: $repo,
@@ -64,11 +69,11 @@ class UpdateGenreUseCaseTest extends TestCase
                 name: 'teste',
                 categories: $categories,
             ));
-
-            $this->assertDatabaseCount('genres', 1);
         } catch (Throwable $e) {
-            $this->assertDatabaseCount('genres', 0);
-            $this->assertDatabaseCount('category_genre', 0);
+            $this->assertDatabaseHas('genres', [
+                'id' => $genre->id,
+                'name' => $genre->name,
+            ]);
         }
     }
 }

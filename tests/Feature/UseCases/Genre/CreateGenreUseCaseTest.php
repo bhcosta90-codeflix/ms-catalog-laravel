@@ -68,24 +68,19 @@ class CreateGenreUseCaseTest extends TestCase
     {
         $categories = Category::factory(4)->create()->pluck('id')->toArray();
 
-        $repo = new Repository(new Model);
-
-        // $useCase = new UseCase(
-        //     repository: $repo,
-        //     transactionContract: new TransactionDatabase(),
-        //     categoryRepositoryInterface: new CategoryRepository(new Category())
-        // );
-
-        $mock = Mockery::mock(UseCase::class, [
-            $repo,
-            new TransactionDatabase,
-            new CategoryRepository(new Category()),
+        $repo = Mockery::mock(Repository::class, [
+            new Model
         ]);
+        $repo->shouldReceive('insert')->andThrow(Exception::class);
+
+        $useCase = new UseCase(
+            repository: $repo,
+            transactionContract: new TransactionDatabase(),
+            categoryRepositoryInterface: new CategoryRepository(new Category())
+        );
 
         try {
-            $mock->shouldReceive('execute', throw new Exception());
-
-            $mock->execute(new Input(
+            $useCase->execute(new Input(
                 name: 'teste',
                 categories: $categories
             ));
@@ -93,6 +88,16 @@ class CreateGenreUseCaseTest extends TestCase
             $this->assertDatabaseCount('genres', 0);
             $this->assertDatabaseCount('category_genre', 0);
         }
+
+        // $categories = Category::factory(4)->create()->pluck('id')->toArray();
+
+        // $repo = new Repository(new Model);
+
+        // $useCase = new UseCase(
+        //     repository: $repo,
+        //     transactionContract: new TransactionDatabase(),
+        //     categoryRepositoryInterface: new CategoryRepository(new Category())
+        // );
 
         // try {
         //     $useCase->execute(new Input(
