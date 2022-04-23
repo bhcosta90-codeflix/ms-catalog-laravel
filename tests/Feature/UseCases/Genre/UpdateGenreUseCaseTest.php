@@ -8,7 +8,6 @@ use App\Models\Genre as Model;
 use App\Models\Genre;
 use App\Repositories\Eloquent\CategoryRepository;
 use App\Repositories\Transactions\TransactionDatabase;
-use Costa\Core\Utils\Exceptions\NotFoundDomainException;
 use Costa\Core\Utils\ValueObject\Uuid;
 use Costa\Core\Modules\Genre\UseCases\UpdateGenreUseCase as UseCase;
 use Costa\Core\Modules\Genre\UseCases\DTO\Updated\Input;
