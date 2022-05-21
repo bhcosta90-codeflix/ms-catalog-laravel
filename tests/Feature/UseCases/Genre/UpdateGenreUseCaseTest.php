@@ -27,7 +27,7 @@ class UpdateGenreUseCaseTest extends TestCase
 
         $useCase = new UseCase(
             repository: $repo,
-            transactionContract: new TransactionDatabase(),
+            transactionInterface: new TransactionDatabase(),
             categoryRepositoryInterface: new CategoryRepository(new Category())
         );
         $response = $useCase->execute(new Input(
@@ -58,7 +58,7 @@ class UpdateGenreUseCaseTest extends TestCase
 
         $useCase = new UseCase(
             repository: $repo,
-            transactionContract: new TransactionDatabase(),
+            transactionInterface: new TransactionDatabase(),
             categoryRepositoryInterface: new CategoryRepository(new Category())
         );
 

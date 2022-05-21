@@ -2,10 +2,10 @@
 
 namespace App\Repositories\Transactions;
 
-use Costa\Core\Utils\Contracts\TransactionContract;
+use Costa\Core\Utils\Contracts\TransactionInterface;
 use Illuminate\Support\Facades\DB;
 
-class TransactionDatabase implements TransactionContract
+class TransactionDatabase implements TransactionInterface
 {
     public function __construct()
     {

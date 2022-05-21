@@ -11,6 +11,7 @@ use Costa\Core\Utils\Exceptions\NotFoundDomainException;
 use Costa\Core\Utils\ValueObject\Uuid;
 use Costa\Core\Modules\Genre\UseCases\CreateGenreUseCase as UseCase;
 use Costa\Core\Modules\Genre\UseCases\DTO\Created\Input;
+use Costa\Core\Utils\Contracts\TransactionInterface;
 use Exception;
 use Mockery;
 use Tests\TestCase;
@@ -25,7 +26,7 @@ class CreateGenreUseCaseTest extends TestCase
 
         $useCase = new UseCase(
             repository: $repo,
-            transactionContract: new TransactionDatabase(),
+            transactionInterface: new TransactionDatabase(),
             categoryRepositoryInterface: new CategoryRepository(new Category())
         );
 
@@ -54,7 +55,7 @@ class CreateGenreUseCaseTest extends TestCase
 
         $useCase = new UseCase(
             repository: $repo,
-            transactionContract: new TransactionDatabase(),
+            transactionInterface: new TransactionDatabase(),
             categoryRepositoryInterface: new CategoryRepository(new Category())
         );
 
@@ -75,7 +76,7 @@ class CreateGenreUseCaseTest extends TestCase
 
         $useCase = new UseCase(
             repository: $repo,
-            transactionContract: new TransactionDatabase(),
+            transactionInterface: new TransactionDatabase(),
             categoryRepositoryInterface: new CategoryRepository(new Category())
         );
 
